@@ -134,7 +134,7 @@ class App extends Component {
             onChange={this.handleGenderChange}
             id="male-check"
             />
-          <label className="form-check-label" for="male-check">
+          <label className="form-check-label" htmlFor="male-check">
             Male
           </label>
         </div>
@@ -148,13 +148,13 @@ class App extends Component {
             onChange={this.handleGenderChange}
             id="female-check"
             /> 
-          <label className="form-check-label" for="female-check">
+          <label className="form-check-label" htmlFor="female-check">
             Female
           </label>
         </div>  
       
         <div className="form-group row justify-content-center">
-          <label for="age" className="col-2 col-form-label">Age:</label> 
+          <label htmlFor="age" className="col-2 col-form-label">Age:</label> 
           <div className="col-4">
           <input 
             type="number" 
@@ -167,7 +167,7 @@ class App extends Component {
           </div>
         </div>
         <div className="form-group row justify-content-center">
-          <label for="weight" className="col-2 col-form-label">Weight:</label>
+          <label htmlFor="weight" className="col-2 col-form-label">Weight:</label>
           <div className="col-4">
           <input 
             type="number" 
@@ -180,7 +180,7 @@ class App extends Component {
           </div>
         </div>
         <div className="form-group row justify-content-center">
-          <label for="height" className="col-2 col-form-label">Height:</label>
+          <label htmlFor="height" className="col-2 col-form-label">Height:</label>
           <div className="col-4">
           <input 
             type="number" 
@@ -193,7 +193,7 @@ class App extends Component {
           </div>
         </div>
         <div className="form-group row justify-content-center">
-          <label for="activity" className="col-2 col-form-label">Activity:</label> 
+          <label htmlFor="activity" className="col-2 col-form-label">Activity:</label> 
           {/* Activity values are basically RMR multipliers, used later on in the Formula */}
           <div className="col-4">
           <select className="form-control" id="activity" value={this.state.Activity} onChange={this.handleActivityChange}>
