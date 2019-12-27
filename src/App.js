@@ -82,7 +82,7 @@ class App extends Component {
       DisplayFormula: false,
       DisplayCut: true,
       DisplayGraph: true,
-      Modifier: -300,
+      Modifier: -350,
       CarbModifier: '0.4',
       FatModifier: '0.4',
       ProteinModifier: '0.2'
@@ -95,7 +95,7 @@ class App extends Component {
       DisplayFormula: false,
       DisplayBulk: true,
       DisplayGraph: true,
-      Modifier: 300,
+      Modifier: 350,
       CarbModifier: '0.4',
       FatModifier: '0.4',
       ProteinModifier: '0.2'
@@ -266,6 +266,7 @@ class App extends Component {
         carbohydrates={parseInt((this.state.Calories + this.state.Modifier) * this.state.CarbModifier / 4)}
         fat={parseInt((this.state.Calories + this.state.Modifier) * this.state.FatModifier / 9)}
         protein={parseInt((this.state.Calories + this.state.Modifier) * this.state.ProteinModifier / 4)}
+        calories={this.state.Calories + this.state.Modifier}
       />
     : null }
     </div>

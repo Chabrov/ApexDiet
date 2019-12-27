@@ -11,7 +11,7 @@ class Graph extends Component {
       animationEnabled: true,
       theme: "light1",
       title: {
-        text: "Classic 20/40/40 Macronutrients Distribution",
+        text: "Macronutrients Distribution for " + this.props.calories + " calories",
         fontWeight: "lighter",
         fontFamily: "tahoma",
         fontSize: 25,
