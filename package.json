@@ -2,8 +2,13 @@
   "name": "apex-app",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "npm": "6.12.0",
+    "node": "13.0.1"
+  },
   "dependencies": {
     "bootstrap": "^4.4.1",
+    "heroku": "^7.35.1",
     "jquery": "^3.4.1",
     "popper.js": "^1.16.0",
     "react": "^16.12.0",
