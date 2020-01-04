@@ -10,7 +10,19 @@ import Card from './Cards/Cards';
 import WeightDecrease from './Cards/WeightDecrease';
 import WeightIncrease from './Cards/WeightIncrease';
 // import { thisExpression } from '@babel/types';
- import Graph from './Graph/Graph';
+import Graph from './Graph/Graph';
+import TextField from '@material-ui/core/TextField';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+// import FormLabel from '@material-ui/core/FormLabel';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import InputLabel from '@material-ui/core/InputLabel';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+// import { makeStyles } from '@material-ui/core/styles';
+import 'typeface-roboto';
+
 
 
 
@@ -62,6 +74,11 @@ class App extends Component {
       Activity: event.target.value,
     })
   };
+
+  // Modify 'Calorie' state in standalone function 
+  // genderHandler = () => {
+
+  // }
 
   buttonClickHandler = () => {
     this.setState({
@@ -124,98 +141,108 @@ class App extends Component {
     return (
     <div className="App container col-md-6 col-sm-12 py-5 justify-content-center">
       <Introduction />
-      <form>
-        <div className="form-check-inline col-2 justify-content-center pb-2">
-          <input 
-            type="radio" 
-            value="Male" 
-            name="gender" 
-            className="form-check-input"
+      <FormControl className="col-6">
+        {/* <FormLabel component="legend">Gender</FormLabel> */}
+        <RadioGroup row className="justify-content-center" aria-label="gender" name="gender"  onChange={this.handleGenderChange}>
+          <FormControlLabel
+            control={<Radio color="primary"/>} 
+            value="Male"  
             onChange={this.handleGenderChange}
             id="male-check"
+            label="Male"
             />
-          <label className="form-check-label" htmlFor="male-check">
-            Male
-          </label>
-        </div>
-
-        <div className="form-check-inline col-2 justify-content-center pb-2">
-          <input 
-            type="radio" 
+          <FormControlLabel
+            control={<Radio color="primary"/>} 
             value="Female" 
-            name="gender"
-            className="form-check-input"
             onChange={this.handleGenderChange}
             id="female-check"
+            label="Female"
             /> 
-          <label className="form-check-label" htmlFor="female-check">
-            Female
-          </label>
-        </div>  
+          </RadioGroup>
+        </FormControl>
+        
+        
       
         <div className="form-group row justify-content-center">
-          <label htmlFor="age" className="col-2 col-form-label">Age:</label> 
-          <div className="col-4">
-          <input 
+          <InputLabel htmlFor="age" className="col-2 col-form-label">Age:</InputLabel> 
+          <TextField 
             type="number" 
             name="age" 
             onChange={this.handleAgeChange}
-            className="form-control"
+            className="form-control col-4"
             id="age"
             placeholder="(years)"
+            variant="outlined"
+            size="small"
           />
-          </div>
+         
         </div>
         <div className="form-group row justify-content-center">
-          <label htmlFor="weight" className="col-2 col-form-label">Weight:</label>
-          <div className="col-4">
-          <input 
+          <InputLabel htmlFor="weight" className="col-2 col-form-label">Weight:</InputLabel>
+          <TextField 
             type="number" 
             name="weight" 
             onChange={this.handleWeightChange}
-            className="form-control"
+            className="form-control col-4"
             id="weight"
             placeholder="(kg)"
+            variant="outlined"
+            size="small"
           />
-          </div>
+          
         </div>
         <div className="form-group row justify-content-center">
-          <label htmlFor="height" className="col-2 col-form-label">Height:</label>
-          <div className="col-4">
-          <input 
+          <InputLabel htmlFor="height" className="col-2 col-form-label">Height:</InputLabel>
+          <TextField 
             type="number" 
             name="height" 
             onChange={this.handleHeightChange}
-            className="form-control"
+            className="form-control col-4"
             id="height"
             placeholder="(cm)"
+            variant="outlined"
+            size="small"
           />
-          </div>
         </div>
         <div className="form-group row justify-content-center">
-          <label htmlFor="activity" className="col-2 col-form-label">Activity:</label> 
+          <InputLabel htmlFor="activity" className="col-2 col-form-label">Activity:</InputLabel> 
           {/* Activity values are basically RMR multipliers, used later on in the Formula */}
-          <div className="col-4">
-          <select className="form-control" id="activity" value={this.state.Activity} onChange={this.handleActivityChange}>
-            <option 
-              value="1.2">Sedentary lifestyle
-              </option>
-            <option 
-              value="1.375">Light excercise, 1-2 times per week
-              </option>
-            <option
-              value="1.550">Moderate excercise, 3-5 times per week
-              </option>
-            <option
-              value="1.725">Hard excercise, 6-7 times per week
-              </option>
-            <option
-              value="1.9">Athlete, two times per day
-              </option>
-          </select>
-          </div>
+          <FormControl variant="outlined" className="col-4" size="small">
+          {/* <InputLabel id="activity" className="col-4"> */}
+            <Select
+              labelId="activity"
+              // id="activity"
+              value={this.state.Activity}
+              onChange={this.handleActivityChange}
+               
+            >
+            <MenuItem
+              label="Select"
+              value={1.2}>
+              Sedentary lifestyle
+            </MenuItem>
+            <MenuItem 
+              value={1.375}
+              >Light excercise, 1-2 times per week
+            </MenuItem>
+            <MenuItem
+              value={1.550}>
+              Moderate excercise, 3-5 times per week
+            </MenuItem>
+            <MenuItem
+              value={1.725}>
+              Hard excercise, 6-7 times per week
+            </MenuItem>
+            <MenuItem
+              value={1.9}>
+              Athlete, two times per day
+            </MenuItem>
+            </Select>
+            </FormControl>
+          {/* </InputLabel> */}
+          
         </div>
-      </form>
+      
         <div className="py-2">
           <button  
             className="btn btn-primary"
