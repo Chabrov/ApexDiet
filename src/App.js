@@ -17,7 +17,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 // import FormLabel from '@material-ui/core/FormLabel';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import InputLabel from '@material-ui/core/InputLabel';
+// import InputLabel from '@material-ui/core/InputLabel';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 // import { makeStyles } from '@material-ui/core/styles';
@@ -29,9 +29,13 @@ import 'typeface-roboto';
 class App extends Component {
   state =  {
     Gender: '',
+    GenderError: false,
     Age: '',
+    AgeError: false,
     Weight: '',
+    WeightError: false,
     Height: '',
+    HeightError: false,
     Activity: '1.375',
     DisplayFormula: false,
     DisplayCut: false,
@@ -45,49 +49,118 @@ class App extends Component {
     IsButtonActive: false,
   };
 
+
+  //Handle input changes and turn errors to true if any occur.
   handleGenderChange = (event) => {
-    this.setState({
-      Gender: event.target.value,
-    });
+    const gender = event.target.value;
+    if(gender === '') {
+      this.setState({
+        GenderError: true,
+        Gender: gender,
+      });
+    } else {
+        this.setState({
+          Gender: gender,
+          GenderError: false,
+      });
+    }; 
   };
 
   handleAgeChange = (event) => {
-    this.setState({
-      Age: event.target.value,
+    const age = event.target.value;
+    if(age < 18 || age > 100) {
+      this.setState({
+        AgeError: true,
+        Age: age
+      });
+    } else {
+        this.setState({
+          AgeError: false,
+          Age: age,
     });
+    };
   };
 
   handleWeightChange = (event) => {
-    this.setState({
-      Weight: event.target.value,
-    });
+    const weight = event.target.value;
+    if(weight < 40 || weight > 200) {
+      this.setState({
+        Weight: weight,
+        WeightError: true,
+      });
+    } else {
+        this.setState({
+         Weight: weight,
+         WeightError: false,
+      });
+      };
   };
 
   handleHeightChange = (event) => {
-    this.setState({
-      Height: event.target.value,
-    });
+    const height = event.target.value;
+    if(height < 125 || height > 230) {
+      this.setState({
+        Height: height,
+        HeightError: true,
+      });
+    } else {
+        this.setState({
+         Height: height,
+         HeightError: false,
+      });
+      };
   };
 
+  //No error detection since activity is defined to 1.375 by default
   handleActivityChange = (event) => {
     this.setState({
       Activity: event.target.value,
     })
   };
 
-  // Modify 'Calorie' state in standalone function 
-  // genderHandler = () => {
+  //Check if gender is male or female and adjust caloric level, triggered with 'Calculate!' button
+  adjustCalories = () => {
+    let adjustedCalories = this.state.Gender === "Male" ? parseInt(((10 * this.state.Weight) + (6.25 * this.state.Height) - (5 * this.state.Age) + 5) * this.state.Activity) : parseInt(((10 * this.state.Weight) + (6.25 * this.state.Height) - (5 * this.state.Age) - 161) * this.state.Activity);
 
-  // }
+    this.setState({
+     Calories : adjustedCalories,
+  });
+  };
+
 
   buttonClickHandler = () => {
-    this.setState({
+    this.adjustCalories();
+    if (!this.state.AgeError && !this.state.WeightError && !this.state.HeightError) {
+      this.setState({
       DisplayFormula: true,
-      Calories: this.state.Gender === "Male" ? parseInt(((10 * this.state.Weight) + (6.25 * this.state.Height) - (5 * this.state.Age) + 5) * this.state.Activity) : parseInt(((10 * this.state.Weight) + (6.25 * this.state.Height) - (5 * this.state.Age) - 161) * this.state.Activity),
+      // Calories: adjustedCalories,
       DisplayCut: false,
       DisplayBulk: false,
       DisplayGraph: false,
-    })
+    }) 
+  }
+  //  #TODO: CONSTRUCT A CHECK FOR EMPTY USER INPUTS.
+  // else if(!this.state.Age.length) {
+  //   console.log('age is blank')
+  // } 
+  
+      else {
+          this.setState({
+            DisplayFormula: false,
+            // Calories: adjustedCalories,
+            DisplayCut: false,
+            DisplayBulk: false,
+            DisplayGraph: false,
+          });
+        };
+    // this.setState({
+    //   DisplayFormula: true,
+    //   // Calories: adjustedCalories,
+    //   DisplayCut: false,
+    //   DisplayBulk: false,
+    //   DisplayGraph: false,
+    // })
+
     let ButtonName = document.getElementById('Calc-Btn');
     if(ButtonName.firstChild.data === 'Go back!') {
       ButtonName.firstChild.data = 'Calculate!'
@@ -143,10 +216,10 @@ class App extends Component {
       <Introduction />
       <FormControl className="col-6">
         {/* <FormLabel component="legend">Gender</FormLabel> */}
-        <RadioGroup row className="justify-content-center" aria-label="gender" name="gender"  onChange={this.handleGenderChange}>
+        <RadioGroup row className="justify-content-center" aria-label="gender" name="gender" onChange={this.handleGenderChange} >
           <FormControlLabel
             control={<Radio color="primary"/>} 
-            value="Male"  
+            value="Male"
             onChange={this.handleGenderChange}
             id="male-check"
             label="Male"
@@ -161,43 +234,48 @@ class App extends Component {
           </RadioGroup>
         </FormControl>
         
-        
-      
         <div className="form-group row justify-content-center">
-          <InputLabel htmlFor="age" className="col-2 col-form-label">Age:</InputLabel> 
+          {/* <InputLabel htmlFor="age" className="col-2 col-form-label">Age:</InputLabel>  */}
           <TextField 
             type="number" 
-            name="age" 
+            // name="age"
+            label="Age"
             onChange={this.handleAgeChange}
-            className="form-control col-4"
-            id="age"
+            error={this.state.AgeError}
+            helperText={this.state.AgeError ? 'Age must be between 18 and 100 years' : ''}
+            className="form-control col-4 my-2"
+            id="Age"
             placeholder="(years)"
             variant="outlined"
             size="small"
           />
-         
         </div>
         <div className="form-group row justify-content-center">
-          <InputLabel htmlFor="weight" className="col-2 col-form-label">Weight:</InputLabel>
+          {/* <InputLabel htmlFor="weight" className="col-2 col-form-label">Weight:</InputLabel> */}
           <TextField 
             type="number" 
-            name="weight" 
+            // name="weight" 
+            label="Weight"
             onChange={this.handleWeightChange}
-            className="form-control col-4"
+            error={this.state.WeightError}
+            helperText={this.state.WeightError ? 'Weight must be between 40 and 200 kgs.' : ''}
+            className="form-control col-4 my-2"
             id="weight"
             placeholder="(kg)"
             variant="outlined"
             size="small"
-          />
-          
+          /> 
         </div>
         <div className="form-group row justify-content-center">
-          <InputLabel htmlFor="height" className="col-2 col-form-label">Height:</InputLabel>
+          {/* <InputLabel htmlFor="height" className="col-2 col-form-label">Height:</InputLabel> */}
           <TextField 
             type="number" 
-            name="height" 
+            // name="height" 
+            label="Height"
             onChange={this.handleHeightChange}
-            className="form-control col-4"
+            error={this.state.HeightError}
+            helperText={this.state.HeightError ? 'Height must be between 125 and 230 cm.' : ''}
+            className="form-control col-4 my-2"
             id="height"
             placeholder="(cm)"
             variant="outlined"
@@ -205,42 +283,38 @@ class App extends Component {
           />
         </div>
         <div className="form-group row justify-content-center">
-          <InputLabel htmlFor="activity" className="col-2 col-form-label">Activity:</InputLabel> 
+          {/* <InputLabel htmlFor="activity" className="col-2 col-form-label">Activity:</InputLabel>  */}
           {/* Activity values are basically RMR multipliers, used later on in the Formula */}
-          <FormControl variant="outlined" className="col-4" size="small">
+          <FormControl variant="outlined" className="col-4 py-2" size="small">
           {/* <InputLabel id="activity" className="col-4"> */}
             <Select
               labelId="activity"
               // id="activity"
               value={this.state.Activity}
-              onChange={this.handleActivityChange}
-               
+              onChange={this.handleActivityChange}   
             >
-            <MenuItem
-              label="Select"
-              value={1.2}>
-              Sedentary lifestyle
-            </MenuItem>
-            <MenuItem 
-              value={1.375}
-              >Light excercise, 1-2 times per week
-            </MenuItem>
-            <MenuItem
-              value={1.550}>
-              Moderate excercise, 3-5 times per week
-            </MenuItem>
-            <MenuItem
-              value={1.725}>
-              Hard excercise, 6-7 times per week
-            </MenuItem>
-            <MenuItem
-              value={1.9}>
-              Athlete, two times per day
-            </MenuItem>
+              <MenuItem
+                value={1.2}>
+                Sedentary lifestyle
+              </MenuItem>
+              <MenuItem 
+                value={1.375}
+                >Light excercise, 1-2 times per week
+              </MenuItem>
+              <MenuItem
+                value={1.550}>
+                Moderate excercise, 3-5 times per week
+              </MenuItem>
+              <MenuItem
+                value={1.725}>
+                Hard excercise, 6-7 times per week
+              </MenuItem>
+              <MenuItem
+                value={1.9}>
+                Athlete, two times per day
+              </MenuItem>
             </Select>
-            </FormControl>
-          {/* </InputLabel> */}
-          
+          </FormControl>
         </div>
       
         <div className="py-2">
