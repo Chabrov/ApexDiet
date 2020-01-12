@@ -5,6 +5,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min';
 import React, { Component } from 'react';
 import './App.css';
 import Formula from './Formula/Formula';
+import InputError from './InputError/InputError'
 import Introduction from './Introduction/Introduction';
 import Card from './Cards/Cards';
 import WeightDecrease from './Cards/WeightDecrease';
@@ -41,22 +42,26 @@ class App extends Component {
     DisplayCut: false,
     DisplayBulk: false,
     DisplayGraph: false,
+    DisplayError: false,
     Calories: '',
     Modifier: '',
     CarbModifier: '0.4',
     FatModifier: '0.4',
     ProteinModifier: '0.2',
     IsButtonActive: false,
+    errors: true,
   };
 
 
   //Handle input changes and turn errors to true if any occur.
   handleGenderChange = (event) => {
+    this.validationHandler();
     const gender = event.target.value;
     if(gender === '') {
       this.setState({
-        GenderError: true,
         Gender: gender,
+        GenderError: true,
+        DisplayFormula: false,
       });
     } else {
         this.setState({
@@ -67,11 +72,13 @@ class App extends Component {
   };
 
   handleAgeChange = (event) => {
+    this.validationHandler();
     const age = event.target.value;
     if(age < 18 || age > 100) {
       this.setState({
+        Age: age,
         AgeError: true,
-        Age: age
+        DisplayFormula: false,
       });
     } else {
         this.setState({
@@ -82,11 +89,13 @@ class App extends Component {
   };
 
   handleWeightChange = (event) => {
+    this.validationHandler();
     const weight = event.target.value;
     if(weight < 40 || weight > 200) {
       this.setState({
         Weight: weight,
         WeightError: true,
+        DisplayFormula: false,
       });
     } else {
         this.setState({
@@ -97,11 +106,13 @@ class App extends Component {
   };
 
   handleHeightChange = (event) => {
+    this.validationHandler();
     const height = event.target.value;
     if(height < 125 || height > 230) {
       this.setState({
         Height: height,
         HeightError: true,
+        DisplayFormula: false,
       });
     } else {
         this.setState({
@@ -115,7 +126,7 @@ class App extends Component {
   handleActivityChange = (event) => {
     this.setState({
       Activity: event.target.value,
-    })
+    });
   };
 
   //Check if gender is male or female and adjust caloric level, triggered with 'Calculate!' button
@@ -127,32 +138,88 @@ class App extends Component {
   });
   };
 
+  validationHandler = () => {
 
+    const { Gender, Age, Weight, Height } = this.state;
+  
+    //Check for blank fields
+    if (!Gender) {
+     this.setState({ DisplayFormula: false, errors: true });
+    } else { this.setState({  errors: false, DisplayError: false })};
+
+    if (!Age) {
+     this.setState({ DisplayFormula: false, errors: true });
+    } else { this.setState({  errors: false, DisplayError: false  })};
+
+    if (!Weight) {
+     this.setState({ DisplayFormula: false, errors: true });
+    } else { this.setState({  errors: false, DisplayError: false  })};
+
+    if (!Weight) {
+     this.setState({ DisplayFormula: false, errors: true });
+    } else { this.setState({  errors: false, DisplayError: false  })};
+
+    if(!Height) {
+     this.setState({ DisplayFormula: false, errors: true });
+    } else { this.setState({  errors: false, DisplayError: false  })};
+  }
+
+  //Adjusting calories & Validating on 'Calculate' click.
   buttonClickHandler = () => {
+    this.validationHandler();
     this.adjustCalories();
-    if (!this.state.AgeError && !this.state.WeightError && !this.state.HeightError) {
-      this.setState({
-      DisplayFormula: true,
-      // Calories: adjustedCalories,
+
+    if(this.state.errors === false && !this.state.AgeError && !this.state.WeightError && !this.state.HeightError) {
+      this.setState({ 
+        DisplayFormula: true,
+        DisplayCut: false,
+        DisplayBulk: false,
+        DisplayGraph: false,
+      })
+  } else {
+    this.setState({ 
+      DisplayError: true,
+      DisplayFormula: false,
       DisplayCut: false,
       DisplayBulk: false,
       DisplayGraph: false,
-    }) 
+    })
+  };
+
+    const ButtonName = document.getElementById('Calc-Btn');
+
+    if(ButtonName.firstChild.data === 'Go back!') {
+      ButtonName.firstChild.data = 'Calculate!'
+    } else { ButtonName.firstChild.data = 'Calculate!' };
   }
-  //  #TODO: CONSTRUCT A CHECK FOR EMPTY USER INPUTS.
-  // else if(!this.state.Age.length) {
-  //   console.log('age is blank')
+
+  
+  //   if (!this.state.AgeError && !this.state.WeightError && !this.state.HeightError) {
+  //     this.setState({
+  //     DisplayFormula: true,
+  //     // Calories: adjustedCalories,
+  //     DisplayCut: false,
+  //     DisplayBulk: false,
+  //     DisplayGraph: false,
+  //   }); 
+  // }
+  // //  #TODO: CONSTRUCT A CHECK FOR EMPTY USER INPUTS.
+  // else if(!this.state.Age) {
+  //   this.setState({
+  //     DisplayFormula: false,
+  //     DisplayError: true,
+  //   });
   // } 
   
-      else {
-          this.setState({
-            DisplayFormula: false,
-            // Calories: adjustedCalories,
-            DisplayCut: false,
-            DisplayBulk: false,
-            DisplayGraph: false,
-          });
-        };
+  //     else {
+  //         this.setState({
+  //           DisplayFormula: false,
+  //           // Calories: adjustedCalories,
+  //           DisplayCut: false,
+  //           DisplayBulk: false,
+  //           DisplayGraph: false,
+  //         });
+  //       };
     // this.setState({
     //   DisplayFormula: true,
     //   // Calories: adjustedCalories,
@@ -161,11 +228,7 @@ class App extends Component {
     //   DisplayGraph: false,
     // })
 
-    let ButtonName = document.getElementById('Calc-Btn');
-    if(ButtonName.firstChild.data === 'Go back!') {
-      ButtonName.firstChild.data = 'Calculate!'
-    } else { ButtonName.firstChild.data = 'Calculate!' };
-  };
+    
 
   cutButtonHandler = () => {
     this.setState({
@@ -325,6 +388,11 @@ class App extends Component {
               Calculate!
           </button>
         </div>
+      {this.state.DisplayError? 
+        <InputError 
+        /> : null
+      }
+      
       {this.state.DisplayFormula ?
         <Formula 
         gender={this.state.Gender}
