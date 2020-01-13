@@ -31,12 +31,16 @@ class App extends Component {
   state =  {
     Gender: '',
     GenderError: false,
+    GenderErrors: true,
     Age: '',
     AgeError: false,
+    AgeErrors: true,
     Weight: '',
     WeightError: false,
+    WeightErrors: true,
     Height: '',
     HeightError: false,
+    HeightErrors: true,
     Activity: '1.375',
     DisplayFormula: false,
     DisplayCut: false,
@@ -49,7 +53,6 @@ class App extends Component {
     FatModifier: '0.4',
     ProteinModifier: '0.2',
     IsButtonActive: false,
-    errors: true,
   };
 
 
@@ -62,6 +65,7 @@ class App extends Component {
         Gender: gender,
         GenderError: true,
         DisplayFormula: false,
+        GenderErrors: true,
       });
     } else {
         this.setState({
@@ -106,7 +110,7 @@ class App extends Component {
   };
 
   handleHeightChange = (event) => {
-    this.validationHandler();
+    
     const height = event.target.value;
     if(height < 125 || height > 230) {
       this.setState({
@@ -120,6 +124,7 @@ class App extends Component {
          HeightError: false,
       });
       };
+      this.validationHandler();
   };
 
   //No error detection since activity is defined to 1.375 by default
@@ -143,39 +148,37 @@ class App extends Component {
     const { Gender, Age, Weight, Height } = this.state;
   
     //Check for blank fields
-    if (!Gender) {
-     this.setState({ DisplayFormula: false, errors: true });
-    } else { this.setState({  errors: false, DisplayError: false })};
+    
 
     if (!Age) {
-     this.setState({ DisplayFormula: false, errors: true });
-    } else { this.setState({  errors: false, DisplayError: false  })};
+     this.setState({ DisplayFormula: false, AgeErrors: true });
+    } else { this.setState({  AgeErrors: false, DisplayError: false  })};
 
     if (!Weight) {
-     this.setState({ DisplayFormula: false, errors: true });
-    } else { this.setState({  errors: false, DisplayError: false  })};
-
-    if (!Weight) {
-     this.setState({ DisplayFormula: false, errors: true });
-    } else { this.setState({  errors: false, DisplayError: false  })};
+     this.setState({ DisplayFormula: false, WeightErrors: true });
+    } else { this.setState({  WeightErrors: false, DisplayError: false  })};
 
     if(!Height) {
-     this.setState({ DisplayFormula: false, errors: true });
-    } else { this.setState({  errors: false, DisplayError: false  })};
-  }
+     this.setState({ DisplayFormula: false, HeightErrors: true });
+    } else { this.setState({  HeightErrors: false, DisplayError: false  })};
+
+    if (Gender === '') {
+      this.setState({ DisplayFormula: false, GenderErrors: true });
+    } else { this.setState({  GenderErrors: false, DisplayError: false })};
+  };
 
   //Adjusting calories & Validating on 'Calculate' click.
   buttonClickHandler = () => {
     this.validationHandler();
     this.adjustCalories();
 
-    if(this.state.errors === false && !this.state.AgeError && !this.state.WeightError && !this.state.HeightError) {
+    if(!this.state.AgeErrors && !this.state.AgeError && !this.state.WeightError && !this.state.WeightErrors && !this.state.HeightError && !this.state.HeightErrors && !this.state.GenderErrors) {
       this.setState({ 
         DisplayFormula: true,
         DisplayCut: false,
         DisplayBulk: false,
         DisplayGraph: false,
-      })
+      });
   } else {
     this.setState({ 
       DisplayError: true,
@@ -191,44 +194,8 @@ class App extends Component {
     if(ButtonName.firstChild.data === 'Go back!') {
       ButtonName.firstChild.data = 'Calculate!'
     } else { ButtonName.firstChild.data = 'Calculate!' };
-  }
+  };
 
-  
-  //   if (!this.state.AgeError && !this.state.WeightError && !this.state.HeightError) {
-  //     this.setState({
-  //     DisplayFormula: true,
-  //     // Calories: adjustedCalories,
-  //     DisplayCut: false,
-  //     DisplayBulk: false,
-  //     DisplayGraph: false,
-  //   }); 
-  // }
-  // //  #TODO: CONSTRUCT A CHECK FOR EMPTY USER INPUTS.
-  // else if(!this.state.Age) {
-  //   this.setState({
-  //     DisplayFormula: false,
-  //     DisplayError: true,
-  //   });
-  // } 
-  
-  //     else {
-  //         this.setState({
-  //           DisplayFormula: false,
-  //           // Calories: adjustedCalories,
-  //           DisplayCut: false,
-  //           DisplayBulk: false,
-  //           DisplayGraph: false,
-  //         });
-  //       };
-    // this.setState({
-    //   DisplayFormula: true,
-    //   // Calories: adjustedCalories,
-    //   DisplayCut: false,
-    //   DisplayBulk: false,
-    //   DisplayGraph: false,
-    // })
-
-    
 
   cutButtonHandler = () => {
     this.setState({
@@ -239,7 +206,7 @@ class App extends Component {
       CarbModifier: '0.4',
       FatModifier: '0.4',
       ProteinModifier: '0.2'
-    })
+    });
     document.getElementById('Calc-Btn').firstChild.data = 'Go back!';
   };
 
@@ -260,7 +227,8 @@ class App extends Component {
     this.setState({
       CarbModifier: '0.25',
       FatModifier: '0.5',
-      ProteinModifier: '0.25'
+      ProteinModifier: '0.25',
+      DisplayGraph: true,
     });
   };
 
