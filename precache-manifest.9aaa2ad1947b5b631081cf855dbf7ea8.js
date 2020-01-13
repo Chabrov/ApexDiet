@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "741e91a74648ae0806a84cc7c7c26387",
+    "revision": "04c8e9344287ded5556b8043ac68a10f",
     "url": "/ApexDiet/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ApexDiet/static/css/2.69d7c96d.chunk.css"
   },
   {
-    "revision": "254252dd8f5067b6d044",
+    "revision": "f31ffd089487ea70bb75",
     "url": "/ApexDiet/static/css/main.b100e6da.chunk.css"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ApexDiet/static/js/2.f8df79ff.chunk.js.LICENSE"
   },
   {
-    "revision": "254252dd8f5067b6d044",
-    "url": "/ApexDiet/static/js/main.4c3f0513.chunk.js"
+    "revision": "f31ffd089487ea70bb75",
+    "url": "/ApexDiet/static/js/main.2495bfe0.chunk.js"
   },
   {
     "revision": "3c1a4b3ed1b3b17aa125",

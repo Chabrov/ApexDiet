@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/ApexDiet/precache-manifest.979d7f393833089c13b70c4c24e74362.js"
+  "/ApexDiet/precache-manifest.9aaa2ad1947b5b631081cf855dbf7ea8.js"
 );
 
 self.addEventListener('message', (event) => {
