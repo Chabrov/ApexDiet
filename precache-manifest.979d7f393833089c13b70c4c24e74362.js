@@ -1,31 +1,31 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "26a3aa7c9cdeca12f6c928f98be6ff3d",
+    "revision": "741e91a74648ae0806a84cc7c7c26387",
     "url": "/ApexDiet/index.html"
   },
   {
-    "revision": "ecddc6e8ea7ba47969ee",
-    "url": "/ApexDiet/static/css/2.f399af92.chunk.css"
+    "revision": "1ec40c28d8e752f097d6",
+    "url": "/ApexDiet/static/css/2.69d7c96d.chunk.css"
   },
   {
-    "revision": "3367ed5f5f69076704a7",
+    "revision": "254252dd8f5067b6d044",
     "url": "/ApexDiet/static/css/main.b100e6da.chunk.css"
   },
   {
-    "revision": "ecddc6e8ea7ba47969ee",
-    "url": "/ApexDiet/static/js/2.5fc20349.chunk.js"
+    "revision": "1ec40c28d8e752f097d6",
+    "url": "/ApexDiet/static/js/2.f8df79ff.chunk.js"
   },
   {
     "revision": "1c2baa150570afb3059dc5cb7a908a16",
-    "url": "/ApexDiet/static/js/2.5fc20349.chunk.js.LICENSE"
+    "url": "/ApexDiet/static/js/2.f8df79ff.chunk.js.LICENSE"
   },
   {
-    "revision": "3367ed5f5f69076704a7",
-    "url": "/ApexDiet/static/js/main.74fdb9d5.chunk.js"
+    "revision": "254252dd8f5067b6d044",
+    "url": "/ApexDiet/static/js/main.4c3f0513.chunk.js"
   },
   {
-    "revision": "d826b72fd04a14a9cb5d",
-    "url": "/ApexDiet/static/js/runtime-main.099871c1.js"
+    "revision": "3c1a4b3ed1b3b17aa125",
+    "url": "/ApexDiet/static/js/runtime-main.52924d86.js"
   },
   {
     "revision": "5cb7edfceb233100075dc9a1e12e8da3",
