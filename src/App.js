@@ -110,7 +110,7 @@ class App extends Component {
   };
 
   handleHeightChange = (event) => {
-    
+    this.validationHandler();
     const height = event.target.value;
     if(height < 125 || height > 230) {
       this.setState({
@@ -124,7 +124,6 @@ class App extends Component {
          HeightError: false,
       });
       };
-      this.validationHandler();
   };
 
   //No error detection since activity is defined to 1.375 by default
@@ -243,7 +242,7 @@ class App extends Component {
 
   render() {
     return (
-    <div className="App container col-md-6 col-sm-12 py-5 justify-content-center">
+    <div className="App container col-xs-12 col-md-8 col-lg-6 py-5 justify-content-center">
       <Introduction />
       <FormControl className="col-6">
         {/* <FormLabel component="legend">Gender</FormLabel> */}
