@@ -57,16 +57,7 @@ class App extends Component {
 
   //Handle input changes and turn errors to true if any occur.
   handleGenderChange = (event) => {
-    // this.validationHandler();
     const gender = event.target.value;
-    // if(!gender) {
-    //   this.setState({
-    //     gender: gender,
-    //     genderError: true,
-    //     displayFormula: false,
-    //     genderErrors: true,
-    //   });
-    // } else 
         this.setState({
           gender: gender,
           genderError: false,
@@ -75,11 +66,11 @@ class App extends Component {
   };
 
   handleAgeChange = (event) => {
-    // this.validationHandler();
     const age = event.target.value;
     if(age < 18 || age > 100) {
       this.setState({
         age: age,
+        ageErrors: true,
       });
     } else {
         this.setState({
@@ -91,11 +82,11 @@ class App extends Component {
   };
 
   handleWeightChange = (event) => {
-    // this.validationHandler();
     const weight = event.target.value;
     if(weight < 40 || weight > 200) {
       this.setState({
         weight: weight,
+        weightErrors: true,
       });
     } else {
         this.setState({
@@ -107,11 +98,11 @@ class App extends Component {
   };
 
   handleHeightChange = (event) => {
-    // this.validationHandler();
     const height = event.target.value;
     if(height < 125 || height > 230) {
       this.setState({
         height: height,
+        heightErrors: true,
       });
     } else {
         this.setState({
@@ -129,21 +120,12 @@ class App extends Component {
     });
   };
 
-  //Check if gender is male or female and adjust caloric level, triggered with 'Calculate!' button
-  adjustCalories = () => {
-    let adjustedCalories = this.state.gender === "Male" ? parseInt(((10 * this.state.weight) + (6.25 * this.state.height) - (5 * this.state.age) + 5) * this.state.activity) : parseInt(((10 * this.state.weight) + (6.25 * this.state.height) - (5 * this.state.age) - 161) * this.state.activity);
-
-    this.setState({
-     calories : adjustedCalories,
-    });
-  };
 
   validationHandler = () => {
 
-    const { gender, age, weight, height, ageErrors, weightErrors, heightErrors, genderErrors } = this.state;
+    const { gender, age, weight, height, ageError, ageErrors, weightError, weightErrors, heightError, heightErrors, genderError, genderErrors } = this.state;
   
-    //Check for blank fields
-    
+    //Check for blank fields and wrong input
     if (!age || age < 18 || age > 100) {
      this.setState({ ageErrors: true, ageError: true });
     } else { this.setState({  ageErrors: false, ageError: false, displayError: false  })};
@@ -160,40 +142,30 @@ class App extends Component {
       this.setState({ genderErrors: true, genderError: true });
     } else { this.setState({  genderErrors: false, genderError: false, displayError: false })};
 
-    if (ageErrors || weightErrors || heightErrors || genderErrors ) {
-      this.setState({ inputErrorsOccured: true, displayFormula: false })
+    //if all booleans are false - display formula
+    if (ageErrors || ageError || 
+        weightError || weightErrors || 
+        heightError || heightErrors || 
+        genderErrors || genderError ) {
+          this.setState({ displayFormula: false, displayError: true  })
     } else {
-      this.setState({ inputErrorsOccured: false, displayFormula: true})
-    }
+          this.setState({ displayFormula: true, displayError: false  })
+    };
   };
+
+    //Check if gender is male or female and adjust caloric level, triggered with 'Calculate!' button
+    adjustCalories = () => {
+      let adjustedCalories = this.state.gender === "Male" ? parseInt(((10 * this.state.weight) + (6.25 * this.state.height) - (5 * this.state.age) + 5) * this.state.activity) : parseInt(((10 * this.state.weight) + (6.25 * this.state.height) - (5 * this.state.age) - 161) * this.state.activity);
+  
+      this.setState({
+       calories : adjustedCalories,
+      });
+    };
 
   //Adjusting calories & Validating on 'Calculate' click.
   buttonClickHandler = () => {
     this.validationHandler();
     this.adjustCalories();
-
-    if(!this.state.ageErrors 
-      && !this.state.ageError 
-      && !this.state.weightError 
-      && !this.state.weightErrors 
-      && !this.state.heightError 
-      && !this.state.heightErrors 
-      && !this.state.genderErrors) {
-        this.setState({ 
-          displayFormula: true,
-          displayCut: false,
-          displayBulk: false,
-          displayGraph: false,
-        });
-    } else {
-      this.setState({ 
-        displayError: true,
-        displayFormula: false,
-        displayCut: false,
-        displayBulk: false,
-        displayGraph: false,
-     });
-    };
   };
 
 
