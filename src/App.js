@@ -1,6 +1,4 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-// import $ from 'jquery';
-// import Popper from 'popper.js';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import React, { Component } from 'react';
 import './App.css';
@@ -10,7 +8,6 @@ import Introduction from './Introduction/Introduction';
 import Card from './Cards/Cards';
 import WeightDecrease from './Cards/WeightDecrease';
 import WeightIncrease from './Cards/WeightIncrease';
-// import { thisExpression } from '@babel/types';
 import Graph from './Graph/Graph';
 import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
@@ -29,99 +26,98 @@ import 'typeface-roboto';
 
 class App extends Component {
   state =  {
-    Gender: '',
-    GenderError: false,
-    GenderErrors: true,
-    Age: '',
-    AgeError: false,
-    AgeErrors: true,
-    Weight: '',
-    WeightError: false,
-    WeightErrors: true,
-    Height: '',
-    HeightError: false,
-    HeightErrors: true,
-    Activity: '1.375',
-    DisplayFormula: false,
-    DisplayCut: false,
-    DisplayBulk: false,
-    DisplayGraph: false,
-    DisplayError: false,
-    Calories: '',
-    Modifier: '',
-    CarbModifier: '0.4',
-    FatModifier: '0.4',
-    ProteinModifier: '0.2',
-    IsButtonActive: false,
+    gender: '',
+    genderError: false,
+    genderErrors: true,
+    age: '',
+    ageError: false,
+    ageErrors: true,
+    weight: '',
+    weightError: false,
+    weightErrors: true,
+    height: '',
+    heightError: false,
+    heightErrors: true,
+    activity: '1.375',
+    displayFormula: false,
+    displayCut: false,
+    displayBulk: false,
+    displayGraph: false,
+    displayError: false,
+    calories: '',
+    modifier: '',
+    carbModifier: '0.4',
+    fatModifier: '0.4',
+    proteinModifier: '0.2',
+    // isButtonActive: false, //TODO toggle button on once the form is filled
+    isCalculated: false,
+    inputErrorsOccured: false,
   };
 
 
   //Handle input changes and turn errors to true if any occur.
   handleGenderChange = (event) => {
-    this.validationHandler();
+    // this.validationHandler();
     const gender = event.target.value;
-    if(gender === '') {
-      this.setState({
-        Gender: gender,
-        GenderError: true,
-        DisplayFormula: false,
-        GenderErrors: true,
-      });
-    } else {
+    // if(!gender) {
+    //   this.setState({
+    //     gender: gender,
+    //     genderError: true,
+    //     displayFormula: false,
+    //     genderErrors: true,
+    //   });
+    // } else 
         this.setState({
-          Gender: gender,
-          GenderError: false,
+          gender: gender,
+          genderError: false,
+          genderErrors: false,
       });
-    }; 
   };
 
   handleAgeChange = (event) => {
-    this.validationHandler();
+    // this.validationHandler();
     const age = event.target.value;
     if(age < 18 || age > 100) {
       this.setState({
-        Age: age,
-        AgeError: true,
-        DisplayFormula: false,
+        age: age,
       });
     } else {
         this.setState({
-          AgeError: false,
-          Age: age,
+          ageError: false,
+          ageErrors: false,
+          age: age,
     });
     };
   };
 
   handleWeightChange = (event) => {
-    this.validationHandler();
+    // this.validationHandler();
     const weight = event.target.value;
     if(weight < 40 || weight > 200) {
       this.setState({
-        Weight: weight,
-        WeightError: true,
-        DisplayFormula: false,
+        weight: weight,
       });
     } else {
         this.setState({
-         Weight: weight,
-         WeightError: false,
+          weight: weight,
+          weightError: false,
+          weightErrors: false,
       });
       };
   };
 
   handleHeightChange = (event) => {
-    this.validationHandler();
+    // this.validationHandler();
     const height = event.target.value;
     if(height < 125 || height > 230) {
       this.setState({
-        Height: height,
-        HeightError: true,
-        DisplayFormula: false,
+        height: height,
       });
     } else {
         this.setState({
-         Height: height,
-         HeightError: false,
+          height: height,
+          heightError: false,
+          heightErrors: false,
       });
       };
   };
@@ -129,41 +125,46 @@ class App extends Component {
   //No error detection since activity is defined to 1.375 by default
   handleActivityChange = (event) => {
     this.setState({
-      Activity: event.target.value,
+      activity: event.target.value,
     });
   };
 
   //Check if gender is male or female and adjust caloric level, triggered with 'Calculate!' button
   adjustCalories = () => {
-    let adjustedCalories = this.state.Gender === "Male" ? parseInt(((10 * this.state.Weight) + (6.25 * this.state.Height) - (5 * this.state.Age) + 5) * this.state.Activity) : parseInt(((10 * this.state.Weight) + (6.25 * this.state.Height) - (5 * this.state.Age) - 161) * this.state.Activity);
+    let adjustedCalories = this.state.gender === "Male" ? parseInt(((10 * this.state.weight) + (6.25 * this.state.height) - (5 * this.state.age) + 5) * this.state.activity) : parseInt(((10 * this.state.weight) + (6.25 * this.state.height) - (5 * this.state.age) - 161) * this.state.activity);
 
     this.setState({
-     Calories : adjustedCalories,
-  });
+     calories : adjustedCalories,
+    });
   };
 
   validationHandler = () => {
 
-    const { Gender, Age, Weight, Height } = this.state;
+    const { gender, age, weight, height, ageErrors, weightErrors, heightErrors, genderErrors } = this.state;
   
     //Check for blank fields
     
+    if (!age || age < 18 || age > 100) {
+     this.setState({ ageErrors: true, ageError: true });
+    } else { this.setState({  ageErrors: false, ageError: false, displayError: false  })};
 
-    if (!Age) {
-     this.setState({ DisplayFormula: false, AgeErrors: true });
-    } else { this.setState({  AgeErrors: false, DisplayError: false  })};
+    if (!weight || weight < 40 || weight > 200) {
+     this.setState({ weightErrors: true, weightError: true });
+    } else { this.setState({  weightErrors: false, weightError: false, displayError: false  })};
 
-    if (!Weight) {
-     this.setState({ DisplayFormula: false, WeightErrors: true });
-    } else { this.setState({  WeightErrors: false, DisplayError: false  })};
+    if(!height || height < 125 || height > 230) {
+     this.setState({ heightErrors: true, heightError: true });
+    } else { this.setState({  heightErrors: false, heightError: false, displayError: false  })};
 
-    if(!Height) {
-     this.setState({ DisplayFormula: false, HeightErrors: true });
-    } else { this.setState({  HeightErrors: false, DisplayError: false  })};
+    if (!gender) {
+      this.setState({ genderErrors: true, genderError: true });
+    } else { this.setState({  genderErrors: false, genderError: false, displayError: false })};
 
-    if (Gender === '') {
-      this.setState({ DisplayFormula: false, GenderErrors: true });
-    } else { this.setState({  GenderErrors: false, DisplayError: false })};
+    if (ageErrors || weightErrors || heightErrors || genderErrors ) {
+      this.setState({ inputErrorsOccured: true, displayFormula: false })
+    } else {
+      this.setState({ inputErrorsOccured: false, displayFormula: true})
+    }
   };
 
   //Adjusting calories & Validating on 'Calculate' click.
@@ -171,81 +172,79 @@ class App extends Component {
     this.validationHandler();
     this.adjustCalories();
 
-    if(!this.state.AgeErrors && !this.state.AgeError && !this.state.WeightError && !this.state.WeightErrors && !this.state.HeightError && !this.state.HeightErrors && !this.state.GenderErrors) {
+    if(!this.state.ageErrors 
+      && !this.state.ageError 
+      && !this.state.weightError 
+      && !this.state.weightErrors 
+      && !this.state.heightError 
+      && !this.state.heightErrors 
+      && !this.state.genderErrors) {
+        this.setState({ 
+          displayFormula: true,
+          displayCut: false,
+          displayBulk: false,
+          displayGraph: false,
+        });
+    } else {
       this.setState({ 
-        DisplayFormula: true,
-        DisplayCut: false,
-        DisplayBulk: false,
-        DisplayGraph: false,
-      });
-  } else {
-    this.setState({ 
-      DisplayError: true,
-      DisplayFormula: false,
-      DisplayCut: false,
-      DisplayBulk: false,
-      DisplayGraph: false,
-    })
-  };
-
-    const ButtonName = document.getElementById('Calc-Btn');
-
-    if(ButtonName.firstChild.data === 'Go back!') {
-      ButtonName.firstChild.data = 'Calculate!'
-    } else { ButtonName.firstChild.data = 'Calculate!' };
+        displayError: true,
+        displayFormula: false,
+        displayCut: false,
+        displayBulk: false,
+        displayGraph: false,
+     });
+    };
   };
 
 
   cutButtonHandler = () => {
     this.setState({
-      DisplayFormula: false,
-      DisplayCut: true,
-      DisplayGraph: true,
-      Modifier: -350,
-      CarbModifier: '0.4',
-      FatModifier: '0.4',
-      ProteinModifier: '0.2'
+      displayFormula: false,
+      displayCut: true,
+      displayGraph: true,
+      modifier: -350,
+      carbModifier: '0.4',
+      fatModifier: '0.4',
+      proteinModifier: '0.2',
     });
-    document.getElementById('Calc-Btn').firstChild.data = 'Go back!';
   };
 
   bulkButtonHandler = () => {
     this.setState({
-      DisplayFormula: false,
-      DisplayBulk: true,
-      DisplayGraph: true,
-      Modifier: 350,
-      CarbModifier: '0.4',
-      FatModifier: '0.4',
-      ProteinModifier: '0.2'
+      displayFormula: false,
+      displayBulk: true,
+      displayGraph: true,
+      modifier: 350,
+      carbModifier: '0.4',
+      fatModifier: '0.4',
+      proteinModifier: '0.2'
     })
-    document.getElementById('Calc-Btn').firstChild.data = 'Go back!';
   };
 
   lowCarbHandler = () => {
     this.setState({
-      CarbModifier: '0.25',
-      FatModifier: '0.5',
-      ProteinModifier: '0.25',
-      DisplayGraph: true,
+      carbModifier: '0.25',
+      fatModifier: '0.5',
+      proteinModifier: '0.25',
+      displayGraph: true
     });
   };
 
   highCarbHandler = () => {
     this.setState({
-      CarbModifier: '0.5',
-      FatModifier: '0.25',
-      ProteinModifier: '0.25'
+      carbModifier: '0.5',
+      fatModifier: '0.25',
+      proteinModifier: '0.25'
     })
   };
 
 
   render() {
     return (
-    <div className="App container col-xs-12 col-md-8 col-lg-6 py-5 justify-content-center">
+    <div className="App container col-xs-12 col-md-8 col-lg-6 py-5 text-center justify-content-center">
       <Introduction />
       <FormControl className="col-6">
-        {/* <FormLabel component="legend">Gender</FormLabel> */}
+        {/* <FormLabel component="legend">gender</FormLabel> */}
         <RadioGroup row className="justify-content-center" aria-label="gender" name="gender" onChange={this.handleGenderChange} >
           <FormControlLabel
             control={<Radio color="primary"/>} 
@@ -265,30 +264,30 @@ class App extends Component {
         </FormControl>
         
         <div className="form-group row justify-content-center">
-          {/* <InputLabel htmlFor="age" className="col-2 col-form-label">Age:</InputLabel>  */}
+          {/* <InputLabel htmlFor="age" className="col-2 col-form-label">age:</InputLabel>  */}
           <TextField 
             type="number" 
             // name="age"
-            label="Age"
+            label="age"
             onChange={this.handleAgeChange}
-            error={this.state.AgeError}
-            helperText={this.state.AgeError ? 'Age must be between 18 and 100 years' : ''}
+            error={this.state.ageError}
+            helperText={this.state.ageError ? 'age must be between 18 and 100 years' : ''}
             className="form-control col-4 my-2"
-            id="Age"
+            id="age"
             placeholder="(years)"
             variant="outlined"
             size="small"
           />
         </div>
         <div className="form-group row justify-content-center">
-          {/* <InputLabel htmlFor="weight" className="col-2 col-form-label">Weight:</InputLabel> */}
+          {/* <InputLabel htmlFor="weight" className="col-2 col-form-label">weight:</InputLabel> */}
           <TextField 
             type="number" 
             // name="weight" 
-            label="Weight"
+            label="weight"
             onChange={this.handleWeightChange}
-            error={this.state.WeightError}
-            helperText={this.state.WeightError ? 'Weight must be between 40 and 200 kgs.' : ''}
+            error={this.state.weightError}
+            helperText={this.state.weightError ? 'weight must be between 40 and 200 kgs.' : ''}
             className="form-control col-4 my-2"
             id="weight"
             placeholder="(kg)"
@@ -297,14 +296,14 @@ class App extends Component {
           /> 
         </div>
         <div className="form-group row justify-content-center">
-          {/* <InputLabel htmlFor="height" className="col-2 col-form-label">Height:</InputLabel> */}
+          {/* <InputLabel htmlFor="height" className="col-2 col-form-label">height:</InputLabel> */}
           <TextField 
             type="number" 
             // name="height" 
-            label="Height"
+            label="height"
             onChange={this.handleHeightChange}
-            error={this.state.HeightError}
-            helperText={this.state.HeightError ? 'Height must be between 125 and 230 cm.' : ''}
+            error={this.state.heightError}
+            helperText={this.state.heightError ? 'height must be between 125 and 230 cm.' : ''}
             className="form-control col-4 my-2"
             id="height"
             placeholder="(cm)"
@@ -313,14 +312,10 @@ class App extends Component {
           />
         </div>
         <div className="form-group row justify-content-center">
-          {/* <InputLabel htmlFor="activity" className="col-2 col-form-label">Activity:</InputLabel>  */}
-          {/* Activity values are basically RMR multipliers, used later on in the Formula */}
           <FormControl variant="outlined" className="col-4 py-2" size="small">
-          {/* <InputLabel id="activity" className="col-4"> */}
             <Select
               labelId="activity"
-              // id="activity"
-              value={this.state.Activity}
+              value={this.state.activity}
               onChange={this.handleActivityChange}   
             >
               <MenuItem
@@ -347,62 +342,68 @@ class App extends Component {
           </FormControl>
         </div>
       
-        <div className="py-2">
-          <button  
-            className="btn btn-primary"
-            onClick={this.buttonClickHandler}
-            id="Calc-Btn">
-              Calculate!
-          </button>
-        </div>
-      {this.state.DisplayError? 
+        
+      <div className="py-2">
+      {!this.state.isCalculated &&
+        <button  
+          className="btn btn-primary"
+          onClick={this.buttonClickHandler}
+          id="Calc-Btn">
+            Calculate!
+        </button> }
+
+      {this.state.isCalculated &&
+        <button  
+          className="btn btn-primary"
+          onClick={this.buttonClickHandler}
+          id="Calc-Btn">
+            Go back
+        </button> }
+      </div>
+      {this.state.displayError? 
         <InputError 
         /> : null
       }
-      
-      {this.state.DisplayFormula ?
+    
+      {this.state.displayFormula ?
         <Formula 
-        gender={this.state.Gender}
-        age={this.state.Age}
-        weight={this.state.Weight}
-        height={this.state.Height}
-        activity={this.state.Activity}
-        display={this.state.DisplayFormula}
-        calories={this.state.Calories}
+        gender={this.state.gender}
+        age={this.state.age}
+        weight={this.state.weight}
+        height={this.state.height}
+        activity={this.state.activity}
+        display={this.state.displayFormula}
+        calories={this.state.calories}
       /> : null
       }
-      {this.state.DisplayFormula ?
+      {this.state.displayFormula ?
         <Card
         handleCutButton={this.cutButtonHandler}
         handleBulkButton={this.bulkButtonHandler}
         />
       : null }
-      {this.state.DisplayCut ? 
+      {this.state.displayCut ? 
         <WeightDecrease 
-        calories={this.state.Calories}
+        calories={this.state.calories}
         handleClassic={this.cutButtonHandler}
         handleLowCarb={this.lowCarbHandler}
         handleHighCarb={this.highCarbHandler}
         />
       : null } 
-      {this.state.DisplayBulk ? 
+      {this.state.displayBulk ? 
         <WeightIncrease 
-        calories={this.state.Calories}
+        calories={this.state.calories}
         handleClassic={this.bulkButtonHandler}
         handleLowCarb={this.lowCarbHandler}
         handleHighCarb={this.highCarbHandler}
         />
       : null }
-      {/* {this.state.DisplayGraph ?
-        <CanvasJSChart options={graphProperties} 
-        />
-      : null } */}
-     {this.state.DisplayGraph ?
+     {this.state.displayGraph ?
       <Graph  
-        carbohydrates={parseInt((this.state.Calories + this.state.Modifier) * this.state.CarbModifier / 4)}
-        fat={parseInt((this.state.Calories + this.state.Modifier) * this.state.FatModifier / 9)}
-        protein={parseInt((this.state.Calories + this.state.Modifier) * this.state.ProteinModifier / 4)}
-        calories={this.state.Calories + this.state.Modifier}
+        carbohydrates={parseInt((this.state.calories + this.state.modifier) * this.state.carbModifier / 4)}
+        fat={parseInt((this.state.calories + this.state.modifier) * this.state.fatModifier / 9)}
+        protein={parseInt((this.state.calories + this.state.modifier) * this.state.proteinModifier / 4)}
+        calories={this.state.calories + this.state.modifier}
       />
     : null }
     </div>
