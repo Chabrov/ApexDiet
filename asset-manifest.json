@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "/ApexDiet/static/css/main.b100e6da.chunk.css",
-    "main.js": "/ApexDiet/static/js/main.2495bfe0.chunk.js",
-    "main.js.map": "/ApexDiet/static/js/main.2495bfe0.chunk.js.map",
+    "main.css": "/ApexDiet/static/css/main.e9c1b23c.chunk.css",
+    "main.js": "/ApexDiet/static/js/main.be1aafc0.chunk.js",
+    "main.js.map": "/ApexDiet/static/js/main.be1aafc0.chunk.js.map",
     "runtime-main.js": "/ApexDiet/static/js/runtime-main.52924d86.js",
     "runtime-main.js.map": "/ApexDiet/static/js/runtime-main.52924d86.js.map",
     "static/css/2.69d7c96d.chunk.css": "/ApexDiet/static/css/2.69d7c96d.chunk.css",
     "static/js/2.f8df79ff.chunk.js": "/ApexDiet/static/js/2.f8df79ff.chunk.js",
     "static/js/2.f8df79ff.chunk.js.map": "/ApexDiet/static/js/2.f8df79ff.chunk.js.map",
     "index.html": "/ApexDiet/index.html",
-    "precache-manifest.9aaa2ad1947b5b631081cf855dbf7ea8.js": "/ApexDiet/precache-manifest.9aaa2ad1947b5b631081cf855dbf7ea8.js",
+    "precache-manifest.13f713628d7ccaada38a426153155fbc.js": "/ApexDiet/precache-manifest.13f713628d7ccaada38a426153155fbc.js",
     "service-worker.js": "/ApexDiet/service-worker.js",
     "static/css/2.69d7c96d.chunk.css.map": "/ApexDiet/static/css/2.69d7c96d.chunk.css.map",
-    "static/css/main.b100e6da.chunk.css.map": "/ApexDiet/static/css/main.b100e6da.chunk.css.map",
+    "static/css/main.e9c1b23c.chunk.css.map": "/ApexDiet/static/css/main.e9c1b23c.chunk.css.map",
     "static/js/2.f8df79ff.chunk.js.LICENSE": "/ApexDiet/static/js/2.f8df79ff.chunk.js.LICENSE",
     "static/media/index.css": "/ApexDiet/static/media/roboto-latin-900italic.ebf6d164.woff2"
   },
@@ -20,7 +20,7 @@
     "static/js/runtime-main.52924d86.js",
     "static/css/2.69d7c96d.chunk.css",
     "static/js/2.f8df79ff.chunk.js",
-    "static/css/main.b100e6da.chunk.css",
-    "static/js/main.2495bfe0.chunk.js"
+    "static/css/main.e9c1b23c.chunk.css",
+    "static/js/main.be1aafc0.chunk.js"
   ]
 }
