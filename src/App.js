@@ -140,7 +140,7 @@ class App extends Component {
 
     if (!gender) {
       this.setState({ genderErrors: true, genderError: true });
-    } else { this.setState({  genderErrors: false, genderError: false, displayError: false })};
+    } else { this.setState({  genderErrors: false, genderError: false, displayError: false  })};
 
     //if all booleans are false - display formula
     if (ageErrors || ageError || 
@@ -157,15 +157,14 @@ class App extends Component {
     adjustCalories = () => {
       let adjustedCalories = this.state.gender === "Male" ? parseInt(((10 * this.state.weight) + (6.25 * this.state.height) - (5 * this.state.age) + 5) * this.state.activity) : parseInt(((10 * this.state.weight) + (6.25 * this.state.height) - (5 * this.state.age) - 161) * this.state.activity);
   
-      this.setState({
-       calories : adjustedCalories,
-      });
+      this.setState({ calories : adjustedCalories  });
     };
 
   //Adjusting calories & Validating on 'Calculate' click.
   buttonClickHandler = () => {
     this.validationHandler();
     this.adjustCalories();
+    this.setState({ displayBulk: false, displayCut: false, displayGraph: false })
   };
 
 
@@ -236,10 +235,8 @@ class App extends Component {
         </FormControl>
         
         <div className="form-group row justify-content-center">
-          {/* <InputLabel htmlFor="age" className="col-2 col-form-label">age:</InputLabel>  */}
           <TextField 
             type="number" 
-            // name="age"
             label="age"
             onChange={this.handleAgeChange}
             error={this.state.ageError}
@@ -252,10 +249,8 @@ class App extends Component {
           />
         </div>
         <div className="form-group row justify-content-center">
-          {/* <InputLabel htmlFor="weight" className="col-2 col-form-label">weight:</InputLabel> */}
           <TextField 
             type="number" 
-            // name="weight" 
             label="weight"
             onChange={this.handleWeightChange}
             error={this.state.weightError}
@@ -268,10 +263,8 @@ class App extends Component {
           /> 
         </div>
         <div className="form-group row justify-content-center">
-          {/* <InputLabel htmlFor="height" className="col-2 col-form-label">height:</InputLabel> */}
           <TextField 
             type="number" 
-            // name="height" 
             label="height"
             onChange={this.handleHeightChange}
             error={this.state.heightError}
@@ -346,8 +339,7 @@ class App extends Component {
         activity={this.state.activity}
         display={this.state.displayFormula}
         calories={this.state.calories}
-      /> : null
-      }
+      /> : null }
       {this.state.displayFormula ?
         <Card
         handleCutButton={this.cutButtonHandler}
